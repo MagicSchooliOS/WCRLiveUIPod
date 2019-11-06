@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>css 3D色子动画(移动端)</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	<style type="text/css">
+		* {
+			margin: 0;
+			padding: 0;
+		}
+
+		html,
+		body {
+			font-size: 80px;
+			width: 100%;
+			height: 100%;
+			display: flex;
+			display: -webkit-flex;
+			flex-direction: column;
+			-webkit-flex-direction: column;
+
+		}
+
+		.wrapper {
+			background-color: #fff;
+			width: 100%;
+			height: 100%;
+			display: flex;
+			display: -webkit-flex;
+			justify-content: center;
+			-webkit-justify-content: center;
+			align-items: center;
+			-webkit-align-items: center;
+			perspective: 10000px;
+			-webkit-perspective: 10000px;
+		}
+
+		.cube {
+			width: 50vw;
+			height: 50vw;
+			background-color: #eee;
+			position: relative;
+			transform-style: preserve-3d;
+			-webkit-transform-style: preserve-3d;
+			transform: rotateX(-40deg) rotateY(20deg);
+			-webkit-transform: rotateX(-40deg) rotateY(20deg);
+			transition: 2s all ease-in-out;
+			-webkit-transition: 2s all ease-in-out;
+			cursor: pointer;
+			-webkit-tap-highlight-color: transparent;
+			user-select: none;
+		}
+
+		.side {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 50vw;
+			height: 50vw;
+			background-color: #e7e7e7;
+			border-radius: 10%;
+			-webkit-border-radius: 10%;
+			transition: 2s all ease;
+			-webkit-transition: 2s all ease;
+		}
+
+		.front {
+			transform: translateZ(25vw);
+			-webkit-transform: translateZ(25vw);
+		}
+
+		.top {
+			transform: rotateX(90deg) translateZ(25vw);
+			-webkit-transform: rotateX(90deg) translateZ(25vw);
+		}
+
+		.right {
+			transform: rotateY(90deg) translateZ(25vw);
+			-webkit-transform: rotateY(90deg) translateZ(25vw);
+		}
+
+		.left {
+			transform: rotateY(-90deg) translateZ(25vw);
+			-webkit-transform: rotateY(-90deg) translateZ(25vw);
+		}
+
+		.bottom {
+			transform: rotateX(-90deg) translateZ(25vw);
+			-webkit-transform: rotateX(-90deg) translateZ(25vw);
+		}
+
+		.back {
+			transform: rotateY(-180deg) translateZ(25vw);
+			-webkit-transform: rotateY(-180deg) translateZ(25vw);
+		}
+
+		.ctrl {
+			width: 100%;
+			padding: 10px 10px;
+			font-size: 16px;
+			text-align: center;
+			/*background-color: #999;*/
+		}
+
+		.about {
+			display: inline-block;
+			width: 100%;
+			text-align: center;
+			position: absolute;
+			bottom: 10px;
+			font-size: 16px;
+			color: #f8f8f8;
+		}
+
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		html,
+		body {
+			height: 100%;
+			display: flex;
+			display: -webkit-flex;
+			flex-direction: column;
+			-webkit-flex-direction: column;
+
+		}
+
+
+		section {
+			display: flex;
+			display: -webkit-flex;
+			align-items: center;
+			-webkit-align-items: center;
+			justify-content: center;
+			-webkit-justify-content: center;
+			vertical-align: center;
+			-webkit-vertical-align: center;
+			flex-wrap: wrap;
+			-webkit-flex-wrap: wrap;
+			flex-grow: 1;
+			-webkit-flex-grow: 1;
+			align-content: center;
+			font-family: 'Open Sans', sans-serif;
+			background: #222;
+
+			/*background: linear-gradient(top, #222, #333);*/
+			/*background: -webkit-linear-gradient(top, #222, #333);*/
+		}
+
+		/*box-shadow 逗号隔开可以写多个阴影，会叠加；把扩展半径和模糊半径设为零，通过设置x y可以模拟设置四条边不同效果，其实是多个叠加
+属性分别为 insset x y 模糊半径 拉伸半径 颜色
+*/
+		[class$="face"] {
+			width: 50vw;
+			height: 50vw;
+			background: #ededed;
+			/*margin: 20px;*/
+			border-radius: 10%;
+			-webkit-border-radius: 10%;
+			box-shadow: inset 0 3px #ececec,
+				inset 0 -3px #ececec,
+				inset -3px 0 #ececec,
+				inset 3px 0 #ececec;
+			-webkit-box-shadow: inset 0 3px #ececec,
+				inset 0 -3px #ececec,
+				inset -3px 0 #ececec,
+				inset 3px 0 #ececec;
+			display: flex;
+			display: -webkit-flex;
+			padding: 10px
+		}
+
+		.flex_start {
+			align-self: flex-start;
+			-webkit-align-self: flex-start;
+		}
+
+		.flex_end {
+			align-self: flex-end;
+			-webkit-align-self: flex-end;
+		}
+
+		.center {
+			align-self: center;
+			-webkit-align-self: center;
+		}
+
+		.baseline {
+			align-self: baseline;
+			-webkit-align-self: baseline;
+		}
+
+		.stretch {
+			align-self: stretch;
+			-webkit-align-self: stretch;
+		}
+
+		.column {
+			display: flex;
+			display: -webkit-flex;
+			flex-direction: column;
+			-webkit-flex-direction: column;
+			justify-content: space-around;
+			-webkit-justify-content: space-around;
+			flex-grow: 1;
+			-webkit-flex-grow: 1;
+			/*background-color: #890;*/
+			align-items: center;
+			-webkit-align-items: center;
+			/*border: solid 1px red;*/
+		}
+
+		.pip {
+			display: box;
+			width: 10vw;
+			height: 10vw;
+			background: #222;
+			border-radius: 50%;
+			-webkit-border-radius: 50%;
+			box-shadow: inset 0 2vw #000, inset 0 -2vw #444;
+			-webkit-box-shadow: inset 0 2vw #000, inset 0 -2vw #444;
+		}
+
+		.flex_grow_1 {
+			flex-grow: 1;
+			-webkit-flex-grow: 1;
+		}
+
+		.flex_grow_2 {
+			flex-grow: 2;
+			-webkit-flex-grow: 2;
+		}
+
+		.flex_grow_3 {
+			flex-grow: 3;
+			-webkit-flex-grow: 3;
+		}
+
+		.flex_grow_4 {
+			flex-grow: 4;
+			-webkit-flex-grow: 4;
+		}
+
+		.flex_grow_5 {
+			flex-grow: 5;
+			-webkit-flex-grow: 5;
+		}
+
+		.first_face {
+			align-items: center;
+			-webkit-align-items: center;
+			justify-content: center;
+			-webkit-justify-content: center;
+		}
+
+		.first_face .pip {
+			box-shadow: inset 0 2vw #f10303, inset 0 -2vw #d80404;
+			-webkit-box-shadow: inset 0 2vw #f10303, inset 0 -2vw #d80404;
+			background: #e80404;
+		}
+
+
+		.second_face {
+			align-items: center;
+			-webkit-align-items: center;
+			flex-direction: row;
+			-webkit-flex-direction: row;
+			justify-content: space-around;
+			-webkit-justify-content: space-around;
+		}
+
+		.third_face {
+			align-items: center;
+			-webkit-align-items: center;
+			justify-content: center;
+			-webkit-justify-content: center;
+		}
+
+		.forth_face {
+			flex-direction: row;
+			-webkit-flex-direction: row;
+
+		}
+
+		.forth_face .pip {
+			box-shadow: inset 0 2vw #f10303, inset 0 -2vw #d80404;
+			-webkit-box-shadow: inset 0 2vw #f10303, inset 0 -2vw #d80404;
+			background: #e80404;
+		}
+
+
+		.one_dot {
+			justify-content: center;
+			-webkit-justify-content: center;
+			align-items: center;
+			-webkit-align-items: center;
+		}
+
+		.one_dot .pip {
+			/*width: 80px;
+			height: 80px;*/
+			box-shadow: inset -2vw 2vw #000, inset -2vw -2vw #444;
+			-webkit-box-shadow: inset -2vw 2vw #000, inset -2vw -2vw #444;
+		}
+
+		.choose {
+			transform: rotatex(7240deg) rotatey(7940deg) rotatez(12330deg) scale3d(1, 1, 1);
+			-webkit-transform: rotatex(7240deg) rotatey(7940deg) rotatez(12330deg) scale3d(1, 1, 1);
+		}
+
+		.choose1 {
+			transform: rotatex(15deg) rotatey(-6deg) rotatez(2deg)scale3d(1, 1, 1);
+			-webkit-transform: rotatex(15deg) rotatey(-6deg) rotatez(2deg)scale3d(1, 1, 1);
+		}
+
+		.choose2 {
+			transform: rotatex(93deg) rotatey(-6deg) rotatez(6deg)scale3d(1, 1, 1);
+			-webkit-transform: rotatex(93deg) rotatey(-6deg) rotatez(6deg)scale3d(1, 1, 1);
+		}
+
+		.choose3 {
+			transform: rotatex(15deg) rotatey(96deg) rotatez(0deg)scale3d(1, 1, 1);
+			-webkit-transform: rotatex(15deg) rotatey(96deg) rotatez(0deg)scale3d(1, 1, 1);
+		}
+
+		.choose4 {
+			transform: rotatex(4deg) rotatey(-92deg) rotatez(10deg)scale3d(1, 1, 1);
+			-webkit-transform: rotatex(4deg) rotatey(-92deg) rotatez(10deg)scale3d(1, 1, 1);
+		}
+
+		.choose5 {
+			transform: rotatex(-96deg) rotatey(20deg) rotatez(4deg)scale3d(1, 1, 1);
+			-webkit-transform: rotatex(-96deg) rotatey(20deg) rotatez(4deg)scale3d(1, 1, 1);
+		}
+
+		.choose6 {
+			transform: rotatex(180deg) rotatey(10deg) rotatez(-10deg)scale3d(1, 1, 1);
+			-webkit-transform: rotatex(180deg) rotatey(10deg) rotatez(-10deg)scale3d(1, 1, 1);
+		}
+	</style>
+</head>
+
+<body>
+	<!-- <div class="ctrl">
+		骰子
+		<input type="text" id="input" name="name">
+		<button onclick="random(2)">掷色子</button>
+	</div> -->
+	<div class="wrapper w2">
+		<div class="cube choose" id="mycube">
+			<div class="side  front">
+				<!-- 1 -->
+				<div class="first_face">
+					<span class="pip"></span>
+				</div>
+			</div>
+			<div class="side back">
+				<!-- 6 -->
+				<div class="sixth_face">
+					<div class="column">
+						<span class="pip"></span>
+						<span class="pip"></span>
+						<span class="pip"></span>
+					</div>
+					<div class="column">
+						<span class="pip"></span>
+						<span class="pip"></span>
+						<span class="pip"></span>
+					</div>
+				</div>
+			</div>
+			<div class="side  right">
+				<!-- 4 -->
+				<div class="forth_face">
+					<div class="column">
+						<span class="pip"></span>
+						<span class="pip"></span>
+					</div>
+					<div class="column">
+						<span class="pip"></span>
+						<span class="pip"></span>
+					</div>
+				</div>
+			</div>
+			<div class="side left">
+				<!-- 3 -->
+				<div class="third_face">
+					<span class="pip flex_start"></span>
+					<span class="pip"></span>
+					<span class="pip flex_end"></span>
+				</div>
+			</div>
+			<div class="side top">
+				<!-- 5 -->
+				<div class="fifth_face">
+					<div class="column">
+						<span class="pip flex_end"></span>
+						<span class="pip flex_end"></span>
+					</div>
+					<div class="column">
+						<span class="pip center"></span>
+					</div>
+					<div class="column">
+						<span class="pip flex_start"></span>
+						<span class="pip flex_start"></span>
+					</div>
+				</div>
+			</div>
+			<div class="side bottom">
+				<!-- 2 -->
+				<div class="second_face">
+					<span class="pip flex_start"></span>
+					<span class="pip flex_end"></span>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+<script type="text/javascript">
+	window.onload=function (){
+	    if(window.webAdapter){
+	        window.webAdapter.setCallback('random')
+		}
+		else{
+			setupWebViewJavascriptBridge(function (bridge) {
+				if (bridge) {
+					bridge.callHandler('setCallback', {'message': 'random'}, function responseCallback(responseData) {
+						console.log("setCallback:", responseData);
+					});
+				}
+			});
+		}
+		
+		console.log('页面加载完毕')
+	}
+	var cube = document.getElementById('mycube');
+	var shaizi = '结束';
+	var timer = null;
+	// var value = document.getElementById('input').value || 6;
+	// function randomClick() {
+	// 	if (shaizi == '结束') {
+	// 		window.webAdapter.userClick('animationstop')
+	// 		console.log('停止转动点击')
+			
+	// 	} else {
+	// 		window.webAdapter.userClick('animationrunning')
+	// 		console.log('转动时点击')
+	// 	}
+	// }
+	function random(value) {
+		shaizi = "转动"
+		cube.className = 'cube choose'
+		setTimeout(function () {
+			if (value == 1) {
+				cube.className = 'cube choose1'
+			} else if (value == 2) {
+				cube.className = 'cube choose2'
+			} else if (value == 3) {
+				cube.className = 'cube choose3'
+			} else if (value == 4) {
+				cube.className = 'cube choose4'
+			} else if (value == 5) {
+				cube.className = 'cube choose5'
+			} else if (value == 6) {
+				cube.className = 'cube choose6'
+			}
+		}, 1300)
+		if (timer) {
+			clearTimeout(timer)
+			timer = null
+		}
+		timer = setTimeout(function () {
+			shaizi = '结束'
+			console.log('%c 转动结束','color:red')
+		}, 2300)
+	}
+	
+	function setupWebViewJavascriptBridge(callback) {
+		if (window.WebViewJavascriptBridge) {
+			return callback(WebViewJavascriptBridge);
+		}
+		if (window.WVJBCallbacks) {
+			return window.WVJBCallbacks.push(callback);
+		}
+		window.WVJBCallbacks = [callback];
+		var WVJBIframe = document.createElement('iframe');
+		WVJBIframe.style.display = 'none';
+		WVJBIframe.src = 'wvjbscheme://__BRIDGE_LOADED__';
+		document.documentElement.appendChild(WVJBIframe);
+		setTimeout(function () {
+			document.documentElement.removeChild(WVJBIframe)
+		}, 0);
+	}
+	
+</script>
+
+</html>

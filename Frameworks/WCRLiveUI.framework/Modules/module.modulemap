@@ -1,0 +1,6 @@
+framework module WCRLiveUI {
+  umbrella header "WCRLiveUI.h"
+
+  export *
+  module * { export * }
+}
