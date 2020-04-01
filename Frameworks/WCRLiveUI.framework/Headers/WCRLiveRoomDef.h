@@ -88,6 +88,7 @@ typedef NS_ENUM(NSUInteger, WCRClassStatus) {
  - WCRLeaveClassRoomReasonUserLeave: 主动离开
  - WCRLeaveClassRoomReasonLoginOnOnterDevice:异地登录被强制踢出课堂
  - WCRLeaveClassRoomReasonClassOver: 老师下课自动退出课堂
+ - WCRLeaveClassRoomReasonCodeLimitLeave: 到达课程人数限制
  - WCRLeaveClassRoomReasonMax: 异常值
 
  */
@@ -97,7 +98,8 @@ typedef NS_ENUM(NSInteger,WCRLeaveClassRoomReason){
     WCRLeaveClassRoomReasonLoginOnOnterDevice,
     WCRLeaveClassRoomReasonClassOver,
     WCRLeaveClassRoomReasonForceQuit,
-    WCRLeaveClassRoomReasonMax
+    WCRLeaveClassRoomReasonCodeLimitLeave,
+    WCRLeaveClassRoomReasonMax,
 };
 
 typedef NS_ENUM(NSInteger, WCRRoomPlaybackMode) {
